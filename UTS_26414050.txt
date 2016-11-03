@@ -1,0 +1,32 @@
+#!usr/bin/bash
+//no 1 
+
+wget http://api.worldbank.org/v2/en/indicator/SI.POV.GINI?downloadformat=csv
+unzip SI.POV.GINI?downloadformat=csv -d test
+cd test
+mv API_SI.POV.GINI.DS2_en_csv_v2 test2.csv
+awk -F"," '{print $6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,$46,$47,$48,$49,$50,$51,$52,$53,$54,$55,$56,$57,$58,$59,$60,$61}' test2.csv > test3.csv
+sed 's/"//g' test3.csv > test4.csv
+cat > test7.csv
+Jumlah
+awk '{for(i=1;i<=NF;i++) t+=$i; if(t!=0) print t; else print "-nan";t=0}' test4.csv > test7.csv
+awk '{getline to_add < "test7.csv"}{print $0,to_add}' test6.csv
+rm test7.csv
+cat > test7.csv
+Maksimum
+awk '{for(i=1;i<=NF;i++) if(t<=$i) t=$i; if(t!=0) print t; else print "-nan";t=0}' test4.csv > test7.csv
+awk '{getline to_add < "test7.csv"}{print $0,to_add}' test6.csv
+rm test7.csv
+cat > test7.csv
+Rata-rata
+awk '{total=$0; avg=total/57;print avg}' test4.csv >> test7.csv
+awk '{getline to_add < "test7.csv"}{print $0,to_add}' test6.csv
+rm test7.csv
+cat > test7.csv
+Minimum
+awk '{for(i=1;i<=NF;i++) if(t>=$i) t=$i; if(t!=100) print t; else print "-nan";t=100}' test4.csv > test7.csv
+awk '{getline to_add < "test7.csv"}{print $0,to_add}' test6.csv
+
+//no 2
+
+curl -X POST -d test https://aplikasi.pertanian.go.id/smshargakab/qrylapharprov.asp --header "Content-Type:POST"
